@@ -1,0 +1,254 @@
+{
+  "categories": [
+    {
+      "name": "Section A: PROGRAM MANAGEMENT and QUALITY ASSURANCE",
+      "questions": [
+        {
+          "id": 1,
+          "text": "The program's mission and goals are consistent with the mission of the institution/college and guide all its operations and activities.",
+          "category": "Section A: PROGRAM MANAGEMENT and QUALITY ASSURANCE"
+        },
+        {
+          "id": 2,
+          "text": "The program has a sufficient number of qualified staff members to perform its administrative, professional, and technical tasks with defined functions and powers.",
+          "category": "Section A: PROGRAM MANAGEMENT and QUALITY ASSURANCE"
+        },
+        {
+          "id": 3,
+          "text": "The program provides an organizational climate and a supportive academic environment.",
+          "category": "Section A: PROGRAM MANAGEMENT and QUALITY ASSURANCE"
+        },
+        {
+          "id": 4,
+          "text": "The program management monitors the achievement of its goals and actions for improvement.",
+          "category": "Section A: PROGRAM MANAGEMENT and QUALITY ASSURANCE"
+        },
+        {
+          "id": 5,
+          "text": "The program management applies mechanisms ensuring integrity, fairness, and equality in all its academic and administrative practices, as well as between the male and female student sections and branches (if any).",
+          "category": "Section A: PROGRAM MANAGEMENT and QUALITY ASSURANCE"
+        },
+        {
+          "id": 6,
+          "text": "The program builds on the views of professionals and experts in the program specialization, contributing to its evaluation, development, and performance improvement.",
+          "category": "Section A: PROGRAM MANAGEMENT and QUALITY ASSURANCE"
+        },
+        {
+          "id": 7,
+          "text": "The program management provides reliable and publicly disclosed information to the community about the program description, performance, and achievements that suit the needs of the stakeholders.",
+          "category": "Section A: PROGRAM MANAGEMENT and QUALITY ASSURANCE"
+        },
+        {
+          "id": 8,
+          "text": "The program management is committed to activating the values of scientific integrity, intellectual property rights, rules of ethical practices, and proper conduct in all academic, research, administrative, and service fields and activities.",
+          "category": "Section A: PROGRAM MANAGEMENT and QUALITY ASSURANCE"
+        },
+        {
+          "id": 9,
+          "text": "The program management applies the systems, regulations, and procedures the institution/college approves, including those related to grievances, complaints, and disciplinary cases.",
+          "category": "Section A: PROGRAM MANAGEMENT and QUALITY ASSURANCE"
+        },
+        {
+          "id": 10,
+          "text": "The program management implements an effective quality assurance and management system that is consistent with the institution's quality system.",
+          "category": "Section A: PROGRAM MANAGEMENT and QUALITY ASSURANCE"
+        },
+        {
+          "id": 11,
+          "text": "The program analyzes the key performance indicators and the evaluation data annually and its results to be used in planning, development, and decision-making processes.",
+          "category": "Section A: PROGRAM MANAGEMENT and QUALITY ASSURANCE"
+        },
+        {
+          "id": 12,
+          "text": "The program conducts a periodic, comprehensive evaluation, prepares improvement plans, and follows up on its implementation.",
+          "category": "Section A: PROGRAM MANAGEMENT and QUALITY ASSURANCE"
+        }
+      ]
+    },
+    {
+      "name": "Standard 2: TEACHING and LEARNING",
+      "questions": [
+        {
+          "id": 13,
+          "text": "The program identifies its intended learning outcomes that are consistent with its mission and the graduate attributes at the institutional level, which should be approved, publicly disclosed, and periodically reviewed.",
+          "category": "Standard 2: TEACHING and LEARNING"
+        },
+        {
+          "id": 14,
+          "text": "The learning outcomes are consistent with the requirements of the National Qualifications Framework and labor market needs.",
+          "category": "Standard 2: TEACHING and LEARNING"
+        },
+        {
+          "id": 15,
+          "text": "The program identifies the learning outcomes for the different tracks (if any).",
+          "category": "Standard 2: TEACHING and LEARNING"
+        },
+        {
+          "id": 16,
+          "text": "The program applies appropriate mechanisms and tools for measuring the learning outcomes and verifying their achievement according to specific performance levels and assessment plans.",
+          "category": "Standard 2: TEACHING and LEARNING"
+        },
+        {
+          "id": 17,
+          "text": "The program implements a clear and approved teaching, learning, and evaluation strategy that articulates its educational philosophy and ensures that the program's intended learning outcomes are achieved.",
+          "category": "Standard 2: TEACHING and LEARNING"
+        },
+        {
+          "id": 18,
+          "text": "The curriculum design considers fulfilling the program goals and learning outcomes and the educational, scientific, technical, and professional developments in the specialization field; it should be periodically reviewed.",
+          "category": "Standard 2: TEACHING and LEARNING"
+        },
+        {
+          "id": 19,
+          "text": "The study plan ensures the balance between the general and specialty requirements and between theoretical and applied aspects, and it considers the courses' sequencing and integration.",
+          "category": "Standard 2: TEACHING and LEARNING"
+        },
+        {
+          "id": 20,
+          "text": "The learning outcomes in the courses are aligned with the program learning outcomes (e.g., Matrix for aligning the learning outcomes of the courses with program learning outcomes).",
+          "category": "Standard 2: TEACHING and LEARNING"
+        },
+        {
+          "id": 21,
+          "text": "The program ensures a unified application of its study plan and the program and the course specifications offered at more than one location (sections of male and female students).",
+          "category": "Standard 2: TEACHING and LEARNING"
+        },
+        {
+          "id": 22,
+          "text": "The program monitors the commitment of the teaching staff to the learning and teaching strategies and assessment methods included in the program and course specifications by specific mechanisms.",
+          "category": "Standard 2: TEACHING and LEARNING"
+        },
+        {
+          "id": 23,
+          "text": "The program's teaching and learning strategies and assessment methods vary based on its nature and level and should be aligned with the program's learning outcomes.",
+          "category": "Standard 2: TEACHING and LEARNING"
+        },
+        {
+          "id": 24,
+          "text": "The required training is provided for the teaching staff on learning and teaching strategies and assessment methods identified in the program and course specifications, along with the effective use of modern and advanced technology; their use is monitored.",
+          "category": "Standard 2: TEACHING and LEARNING"
+        },
+        {
+          "id": 25,
+          "text": "At the beginning of each course, students are provided with comprehensive information about the course, including learning outcomes, teaching and learning strategies, and assessment methods and dates, as well as what is expected from them during the study of the course and feedback on their performance is provided for them.",
+          "category": "Standard 2: TEACHING and LEARNING"
+        },
+        {
+          "id": 26,
+          "text": "The program applies mechanisms to support and motivate excellence in teaching and encourages creativity and innovation in the teaching staff.",
+          "category": "Standard 2: TEACHING and LEARNING"
+        },
+        {
+          "id": 27,
+          "text": "The program implements clear and publicized procedures to verify the quality and validity of the assessment methods and ensure the students' achievement levels.",
+          "category": "Standard 2: TEACHING and LEARNING"
+        },
+        {
+          "id": 28,
+          "text": "Effective procedures are used to control academic integrity at the program level to ensure that the works and assignments of students are of their output.",
+          "category": "Standard 2: TEACHING and LEARNING"
+        }
+      ]
+    },
+    {
+      "name": "Standard 3: STUDENTS",
+      "questions": [
+        {
+          "id": 29,
+          "text": "The program applies approved and disclosed criteria and requirements for the admission, registration, and graduation of students, the transition to another program, and the equivalent of what students have previously learned, commensurate with the nature of the program, and are applied fairly.",
+          "category": "Standard 3: STUDENTS"
+        },
+        {
+          "id": 30,
+          "text": "The program provides essential information to students, such as study requirements, services, and financial fees (if any), through various means.",
+          "category": "Standard 3: STUDENTS"
+        },
+        {
+          "id": 31,
+          "text": "Students are provided with effective academic, professional, psychological, and social guidance and counseling services through qualified and sufficient staff.",
+          "category": "Standard 3: STUDENTS"
+        },
+        {
+          "id": 32,
+          "text": "Mechanisms are applied to identify gifted, creative, talented, and underachieving students in the program, and appropriate programs are available to care for, motivate, and support each group of them.",
+          "category": "Standard 3: STUDENTS"
+        },
+        {
+          "id": 33,
+          "text": "The program implements an effective mechanism to communicate with its alumni and involve them in its events and activities, explore their views, and benefit from their expertise and support; and also provides updated and comprehensive databases about them.",
+          "category": "Standard 3: STUDENTS"
+        },
+        {
+          "id": 34,
+          "text": "Effective mechanisms are applied to evaluate the adequacy and quality of services provided to students and measure their satisfaction with them, and the results are used for improvement.",
+          "category": "Standard 3: STUDENTS"
+        }
+      ]
+    },
+    {
+      "name": "Standard 4: FACULTY",
+      "questions": [
+        {
+          "id": 35,
+          "text": "The program has adequate faculty members at all campuses where it is offered, and appropriate verification mechanisms are applied.",
+          "category": "Standard 4: FACULTY"
+        },
+        {
+          "id": 36,
+          "text": "The teaching and adjunct staff in the professional programs include some experienced and highly skilled professionals in the program field.",
+          "category": "Standard 4: FACULTY"
+        },
+        {
+          "id": 37,
+          "text": "The teaching staff participates in academic, research, and scientific production activities efficiently and regularly, and their participation in these activities is considered one of the criteria for evaluation and promotion.",
+          "category": "Standard 4: FACULTY"
+        },
+        {
+          "id": 38,
+          "text": "Teaching staff participate in community partnership activities, and their participation in these activities is considered one of the criteria for evaluation and promotion.",
+          "category": "Standard 4: FACULTY"
+        },
+        {
+          "id": 39,
+          "text": "The teaching staff participates in professional and academic development programs per a plan that meets their needs and contributes to their performance development.",
+          "category": "Standard 4: FACULTY"
+        },
+        {
+          "id": 40,
+          "text": "The performance of the teaching staff is regularly assessed according to specific and published criteria; feedback is provided to them, and the results are used to improve the performance.",
+          "category": "Standard 4: FACULTY"
+        }
+      ]
+    },
+    {
+      "name": "Standard 5: LEARNING RESOURCES, FACILITIES, and EQUIPMENT",
+      "questions": [
+        {
+          "id": 41,
+          "text": "The program ensures the adequacy and appropriateness of learning sources and services provided per its needs and student numbers and updates them periodically.",
+          "category": "Standard 5: LEARNING RESOURCES, FACILITIES, and EQUIPMENT"
+        },
+        {
+          "id": 42,
+          "text": "The program's teaching staff, students, and employees have the appropriate orientation, technical training, and support for the effective use of resources and means of learning.",
+          "category": "Standard 5: LEARNING RESOURCES, FACILITIES, and EQUIPMENT"
+        },
+        {
+          "id": 43,
+          "text": "Safety, environmental conservation, and hazardous waste disposal standards are applied efficiently and effectively, with all public and occupational health and safety requirements available in facilities and equipment, as well as educational and research activities.",
+          "category": "Standard 5: LEARNING RESOURCES, FACILITIES, and EQUIPMENT"
+        },
+        {
+          "id": 44,
+          "text": "The program has the appropriate technologies, services, and environment for courses offered through distance or e-learning according to their own specific standards.",
+          "category": "Standard 5: LEARNING RESOURCES, FACILITIES, and EQUIPMENT"
+        },
+        {
+          "id": 45,
+          "text": "The program evaluates the effectiveness and efficiency of all types of learning resources, facilities, and equipment; the results are used for improvement.",
+          "category": "Standard 5: LEARNING RESOURCES, FACILITIES, and EQUIPMENT"
+        }
+      ]
+    }
+  ]
+} 

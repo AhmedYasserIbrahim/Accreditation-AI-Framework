@@ -1,0 +1,299 @@
+{
+  "categories": [
+    {
+      "name": "Mission & Goals",
+      "questions": [
+        {
+          "id": 1,
+          "text": "Does the program have a clear, appropriate, and widely publicized mission aligned with the institution's goals and national trends?",
+          "category": "Mission & Goals"
+        },
+        {
+          "id": 2,
+          "text": "Are the program goals linked to the mission, institution/college goals, and characterized by clarity, realism, and measurability?",
+          "category": "Mission & Goals"
+        },
+        {
+          "id": 3,
+          "text": "Do the mission and goals guide program operations such as planning, decision-making, and curriculum development?",
+          "category": "Mission & Goals"
+        },
+        {
+          "id": 4,
+          "text": "Are the program goals implemented through well-defined operational plans aligned with institutional strategies?",
+          "category": "Mission & Goals"
+        },
+        {
+          "id": 5,
+          "text": "Are program goals monitored through specific performance indicators, and are actions taken for improvement?",
+          "category": "Mission & Goals"
+        },
+        {
+          "id": 6,
+          "text": "Are the program mission and goals periodically reviewed with stakeholder participation and revised accordingly?",
+          "category": "Mission & Goals"
+        }
+      ]
+    },
+    {
+      "name": "Program Management & Quality Assurance",
+      "questions": [
+        {
+          "id": 7,
+          "text": "Is the program governed by specialized councils with defined tasks and authorities?",
+          "category": "Program Management & Quality Assurance"
+        },
+        {
+          "id": 8,
+          "text": "Does the program leadership have the academic and administrative experience to achieve its mission and goals?",
+          "category": "Program Management & Quality Assurance"
+        },
+        {
+          "id": 9,
+          "text": "Is there a sufficient number of qualified staff members to perform administrative, professional, and technical tasks?",
+          "category": "Program Management & Quality Assurance"
+        },
+        {
+          "id": 10,
+          "text": "Does the program provide a supportive academic environment for students and faculty?",
+          "category": "Program Management & Quality Assurance"
+        },
+        {
+          "id": 11,
+          "text": "Are there mechanisms for collaboration among different branches offering the same program?",
+          "category": "Program Management & Quality Assurance"
+        },
+        {
+          "id": 12,
+          "text": "Does the program comply with institutional regulations governing research and educational partnerships?",
+          "category": "Program Management & Quality Assurance"
+        },
+        {
+          "id": 13,
+          "text": "Are the program's research and educational partnerships assessed regularly?",
+          "category": "Program Management & Quality Assurance"
+        },
+        {
+          "id": 14,
+          "text": "Does the program management track and enhance community partnerships?",
+          "category": "Program Management & Quality Assurance"
+        },
+        {
+          "id": 15,
+          "text": "Are research contributions monitored to ensure alignment with institutional research plans?",
+          "category": "Program Management & Quality Assurance"
+        }
+      ]
+    },
+    {
+      "name": "Teaching & Learning",
+      "questions": [
+        {
+          "id": 16,
+          "text": "Are graduate attributes and learning outcomes clearly defined and aligned with the institution's mission?",
+          "category": "Teaching & Learning"
+        },
+        {
+          "id": 17,
+          "text": "Do the program learning outcomes align with the National Qualifications Framework and labor market needs?",
+          "category": "Teaching & Learning"
+        },
+        {
+          "id": 18,
+          "text": "Are the learning outcomes for different tracks (if any) clearly defined?",
+          "category": "Teaching & Learning"
+        },
+        {
+          "id": 19,
+          "text": "Are appropriate mechanisms and tools used to measure learning outcomes effectively?",
+          "category": "Teaching & Learning"
+        },
+        {
+          "id": 20,
+          "text": "Does the program implement an approved teaching, learning, and evaluation strategy?",
+          "category": "Teaching & Learning"
+        },
+        {
+          "id": 21,
+          "text": "How effectively does the curriculum support the achievement of program learning outcomes?",
+          "category": "Teaching & Learning"
+        },
+        {
+          "id": 22,
+          "text": "To what extent are teaching methods varied and appropriate for the content?",
+          "category": "Teaching & Learning"
+        }
+      ]
+    },
+    {
+      "name": "Curriculum & Assessment",
+      "questions": [
+        {
+          "id": 23,
+          "text": "Does the curriculum meet institutional policies for design, development, and modification?",
+          "category": "Curriculum & Assessment"
+        },
+        {
+          "id": 24,
+          "text": "Does the curriculum align with educational, scientific, and technical developments in the field?",
+          "category": "Curriculum & Assessment"
+        },
+        {
+          "id": 25,
+          "text": "Is there a balance between general and specialty requirements in the study plan?",
+          "category": "Curriculum & Assessment"
+        },
+        {
+          "id": 26,
+          "text": "Are exit-point requirements defined (if applicable)?",
+          "category": "Curriculum & Assessment"
+        },
+        {
+          "id": 27,
+          "text": "Does the curriculum integrate extracurricular activities supporting learning outcomes?",
+          "category": "Curriculum & Assessment"
+        }
+      ]
+    },
+    {
+      "name": "Students & Alumni Services",
+      "questions": [
+        {
+          "id": 28,
+          "text": "Are admission, registration, and graduation policies transparent and fairly applied?",
+          "category": "Students & Alumni Services"
+        },
+        {
+          "id": 29,
+          "text": "Are students provided with academic and career guidance?",
+          "category": "Students & Alumni Services"
+        },
+        {
+          "id": 30,
+          "text": "Are there mechanisms for identifying and supporting gifted, creative, and underachieving students?",
+          "category": "Students & Alumni Services"
+        },
+        {
+          "id": 31,
+          "text": "Does the institution engage alumni in its events, evaluation, and development efforts?",
+          "category": "Students & Alumni Services"
+        },
+        {
+          "id": 32,
+          "text": "Are students satisfied with the quality of learning experiences provided?",
+          "category": "Students & Alumni Services"
+        },
+        {
+          "id": 33,
+          "text": "How well does the program track and support student success?",
+          "category": "Students & Alumni Services"
+        },
+        {
+          "id": 34,
+          "text": "What is the level of alumni engagement and success in their field?",
+          "category": "Students & Alumni Services"
+        }
+      ]
+    },
+    {
+      "name": "Faculty & Staff",
+      "questions": [
+        {
+          "id": 35,
+          "text": "Are recruitment policies attracting and retaining highly qualified faculty?",
+          "category": "Faculty & Staff"
+        },
+        {
+          "id": 36,
+          "text": "Are teaching staff given opportunities for professional development and training?",
+          "category": "Faculty & Staff"
+        },
+        {
+          "id": 37,
+          "text": "Do faculty members actively participate in academic research and scholarly work?",
+          "category": "Faculty & Staff"
+        },
+        {
+          "id": 38,
+          "text": "Are faculty evaluations conducted regularly with clear feedback mechanisms?",
+          "category": "Faculty & Staff"
+        },
+        {
+          "id": 39,
+          "text": "Does the institution support faculty engagement in community partnership activities?",
+          "category": "Faculty & Staff"
+        },
+        {
+          "id": 40,
+          "text": "How qualified and experienced is the faculty in their respective fields?",
+          "category": "Faculty & Staff"
+        },
+        {
+          "id": 41,
+          "text": "What opportunities exist for faculty professional development?",
+          "category": "Faculty & Staff"
+        }
+      ]
+    },
+    {
+      "name": "Learning Resources & Facilities",
+      "questions": [
+        {
+          "id": 42,
+          "text": "Are learning resources and library services sufficient and updated periodically?",
+          "category": "Learning Resources & Facilities"
+        },
+        {
+          "id": 43,
+          "text": "Are digital and electronic resources accessible to students and faculty?",
+          "category": "Learning Resources & Facilities"
+        },
+        {
+          "id": 44,
+          "text": "Are laboratories and equipment adequate for research and teaching?",
+          "category": "Learning Resources & Facilities"
+        },
+        {
+          "id": 45,
+          "text": "Are occupational health and safety standards effectively applied?",
+          "category": "Learning Resources & Facilities"
+        },
+        {
+          "id": 46,
+          "text": "Are facilities and services available for students and faculty with special needs?",
+          "category": "Learning Resources & Facilities"
+        }
+      ]
+    },
+    {
+      "name": "Assessment & Continuous Improvement",
+      "questions": [
+        {
+          "id": 47,
+          "text": "Does the program evaluate the efficiency of its learning resources, facilities, and equipment?",
+          "category": "Assessment & Continuous Improvement"
+        },
+        {
+          "id": 48,
+          "text": "Does the institution ensure transparency and integrity in student assessments?",
+          "category": "Assessment & Continuous Improvement"
+        },
+        {
+          "id": 49,
+          "text": "Are effective mechanisms in place to prevent academic dishonesty?",
+          "category": "Assessment & Continuous Improvement"
+        },
+        {
+          "id": 50,
+          "text": "Are student performance trends analyzed to improve teaching and learning?",
+          "category": "Assessment & Continuous Improvement"
+        },
+        {
+          "id": 51,
+          "text": "Does the program use assessment data to drive continuous improvement?",
+          "category": "Assessment & Continuous Improvement"
+        }
+      ]
+    }
+  ]
+} 

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AccreditAI - University Program Assessment Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="landing-page">
+        <header class="header">
+            <div class="logo">
+                AccreditAI
+            </div>
+            <div class="institution-info">
+                <span>Prince Sultan University</span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="hero-section">
+                <h1 class="title">Welcome to AccreditAI</h1>
+                <h2 class="subtitle">Program Assessment Tool</h2>
+                <p class="description">
+                    Streamline your program evaluation with data-driven insights.
+                    Our comprehensive assessment system helps you evaluate and improve educational
+                    programs across multiple key performance areas.
+                </p>
+                <p class="researcher-info">
+                    Developed by: <strong>Prof. Yasser Mansour & Ahmed Yasser</strong><br>
+                    Prince Sultan University
+                </p>
+                <div class="cta-buttons">
+                    <a href="/assessment" class="cta-button">Start Assessment</a>
+                    <a href="/ask" class="cta-button secondary">Ask AI</a>
+                </div>
+            </div>
+
+            <div class="features-section">
+                <div class="feature-card">
+                    <i class="fas fa-robot fa-2x" style="color: #3498db; margin-bottom: 1rem;"></i>
+                    <h3>AI-Powered Analysis</h3>
+                    <p>Advanced algorithms analyze your program data to provide meaningful insights and recommendations.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chart-line fa-2x" style="color: #3498db; margin-bottom: 1rem;"></i>
+                    <h3>Comprehensive Reports</h3>
+                    <p>Generate detailed reports with actionable insights and evidence-based recommendations.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-check-circle fa-2x" style="color: #3498db; margin-bottom: 1rem;"></i>
+                    <h3>Accreditation Ready</h3>
+                    <p>Align your program with accreditation standards and best practices in higher education.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-clock fa-2x" style="color: #3498db; margin-bottom: 1rem;"></i>
+                    <h3>Time-Efficient</h3>
+                    <p>Save time with automated assessment processes and instant report generation.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>© 2024 AccreditAI - Developed by Prof. Yasser Mansour & Ahmed Yasser, Prince Sultan University</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html> 

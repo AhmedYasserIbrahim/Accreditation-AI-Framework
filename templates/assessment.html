@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment - AccreditAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="assessment-page">
+        <nav class="sidebar">
+            <div class="logo">
+                AccreditAI
+            </div>
+            <div class="institution-info">
+                <p class="institution-name">Prince Sultan University</p>
+                <p class="researcher">Prof. Yasser Mansour & Ahmed Yasser</p>
+            </div>
+            <div class="progress-section">
+                <h3>Progress</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p id="progressText">0% Complete</p>
+            </div>
+            <div class="nav-sections">
+                <div class="nav-item active" data-section="general-info">
+                    <span class="nav-number">A</span>
+                    <span class="nav-text">General Information</span>
+                </div>
+                <div class="nav-item" data-section="program-management">
+                    <span class="nav-number">1</span>
+                    <span class="nav-text">Program Management & QA</span>
+                </div>
+                <div class="nav-item" data-section="teaching-learning">
+                    <span class="nav-number">2</span>
+                    <span class="nav-text">Teaching & Learning</span>
+                </div>
+                <div class="nav-item" data-section="students">
+                    <span class="nav-number">3</span>
+                    <span class="nav-text">Students</span>
+                </div>
+                <div class="nav-item" data-section="faculty">
+                    <span class="nav-number">4</span>
+                    <span class="nav-text">Faculty</span>
+                </div>
+                <div class="nav-item" data-section="resources">
+                    <span class="nav-number">5</span>
+                    <span class="nav-text">Learning Resources & Facilities</span>
+                </div>
+            </div>
+        </nav>
+
+        <main class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <!-- Messages will be dynamically added here -->
+            </div>
+
+            <div class="input-section">
+                <div id="ratingButtons" class="rating-buttons" style="display: none;">
+                    <!-- Rating buttons will be dynamically added here -->
+                </div>
+                <div id="textInput" class="text-input">
+                    <input type="text" id="userInput" placeholder="Type your response...">
+                    <button id="sendButton">Send</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/assessment.js') }}"></script>
+</body>
+</html> 

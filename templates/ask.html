@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ask AI - AccreditAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="assessment-page">
+        <nav class="sidebar">
+            <div class="logo">
+                AccreditAI
+            </div>
+            <div class="institution-info">
+                <p class="institution-name">Prince Sultan University</p>
+                <p class="researcher">Prof. Yasser Mansour & Ahmed Yasser</p>
+            </div>
+            <div class="nav-sections">
+                <a href="/" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span class="nav-text">Home</span>
+                </a>
+                <a href="/assessment" class="nav-item">
+                    <i class="fas fa-clipboard-check"></i>
+                    <span class="nav-text">Assessment</span>
+                </a>
+                <a href="/ask" class="nav-item active">
+                    <i class="fas fa-question-circle"></i>
+                    <span class="nav-text">Ask AI</span>
+                </a>
+            </div>
+        </nav>
+
+        <main class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot">
+                    Hello! I'm your AI assistant for accreditation-related questions. How can I help you today?
+                </div>
+            </div>
+
+            <div class="input-section">
+                <div class="text-input">
+                    <input type="text" id="userInput" placeholder="Ask me anything about accreditation...">
+                    <button id="sendButton">Send</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="{{ url_for('static', filename='js/ask.js') }}"></script>
+</body>
+</html>
