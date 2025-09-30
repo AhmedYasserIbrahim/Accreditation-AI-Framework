@@ -6,3 +6,4 @@ markdown-tables==1.0.4
 pdfkit==1.0.0
 httpx>=0.24.1
 secure-smtplib==0.1.1 
+gunicorn
