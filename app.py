@@ -37,7 +37,19 @@ if os.name == 'nt':  # Windows
                 WKHTMLTOPDF_PATH = path
                 break
 else:  # Linux/Unix/MacOS
-    WKHTMLTOPDF_PATH = '/usr/local/bin/wkhtmltopdf'
+    # Probe common install locations used by Render and other distros
+    linux_candidates = [
+        '/usr/bin/wkhtmltopdf',
+        '/usr/local/bin/wkhtmltopdf',
+        'wkhtmltopdf'  # Fallback to PATH if available
+    ]
+    WKHTMLTOPDF_PATH = None
+    for path in linux_candidates:
+        if path == 'wkhtmltopdf' or os.path.exists(path):
+            WKHTMLTOPDF_PATH = path
+            break
+    if WKHTMLTOPDF_PATH is None:
+        WKHTMLTOPDF_PATH = 'wkhtmltopdf'
 
 # Configure pdfkit
 config = pdfkit.configuration(wkhtmltopdf=WKHTMLTOPDF_PATH)
@@ -524,9 +536,13 @@ def share_report():
         """
 
         # Configure PDF options
-        config = None
-        if os.name == 'nt':  # Windows
-            config = pdfkit.configuration(wkhtmltopdf='C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe')
+        try:
+            config = pdfkit.configuration(wkhtmltopdf=WKHTMLTOPDF_PATH)
+        except Exception as e:
+            app.logger.error(f"Error configuring wkhtmltopdf: {str(e)}")
+            return jsonify({
+                "error": "PDF generation failed. Please make sure wkhtmltopdf is installed."
+            }), 500
 
         pdf = pdfkit.from_string(complete_html, False, options={
             'page-size': 'A4',
