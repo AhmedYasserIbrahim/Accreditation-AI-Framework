@@ -288,9 +288,9 @@ def generate_pdf():
         <head>
             <meta charset="UTF-8">
             <style>
-                @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+                /* Use system fonts to avoid external network fetches during PDF render */
                 body {{
-                    font-family: 'Inter', sans-serif;
+                    font-family: 'Inter', Arial, Helvetica, sans-serif;
                     line-height: 1.6;
                     color: #2c3e50;
                     margin: 1.5cm;
@@ -393,7 +393,7 @@ def generate_pdf():
         """
 
         try:
-            # Generate PDF with more detailed options
+            # Generate PDF with performance optimizations
             pdf = pdfkit.from_string(complete_html, False, options={
                 'page-size': 'A4',
                 'margin-top': '0.75in',
@@ -405,7 +405,14 @@ def generate_pdf():
                 'footer-right': '[page] of [topage]',
                 'footer-font-size': '9',
                 'footer-line': True,
-                'footer-spacing': '5'
+                'footer-spacing': '5',
+                # Performance and reliability tweaks
+                'quiet': '',
+                'disable-javascript': None,
+                'load-error-handling': 'ignore',
+                'load-media-error-handling': 'ignore',
+                'dpi': '96',
+                'image-quality': '85'
             }, configuration=config)
         except Exception as e:
             app.logger.error(f"Error in PDF generation: {str(e)}")
@@ -446,9 +453,9 @@ def share_report():
         <head>
             <meta charset="UTF-8">
             <style>
-                @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+                /* Use system fonts to avoid external network fetches during PDF render */
                 body {{
-                    font-family: 'Inter', sans-serif;
+                    font-family: 'Inter', Arial, Helvetica, sans-serif;
                     line-height: 1.6;
                     color: #2c3e50;
                     margin: 2cm;
@@ -551,7 +558,14 @@ def share_report():
             'margin-bottom': '0.75in',
             'margin-left': '0.75in',
             'encoding': 'UTF-8',
-            'enable-local-file-access': True
+            'enable-local-file-access': True,
+            # Performance and reliability tweaks
+            'quiet': '',
+            'disable-javascript': None,
+            'load-error-handling': 'ignore',
+            'load-media-error-handling': 'ignore',
+            'dpi': '96',
+            'image-quality': '85'
         }, configuration=config)
 
         # Email configuration
