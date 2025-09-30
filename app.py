@@ -2,12 +2,7 @@ from flask import Flask, render_template, request, jsonify, send_from_directory,
 from openai import OpenAI
 import json
 import os
-import pdfkit
 from datetime import datetime
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-from email.mime.application import MIMEApplication
 import markdown
 import io
 
@@ -22,37 +17,6 @@ client = OpenAI(
 # Load assessment questions
 with open('backend/questions.json', 'r') as f:
     ASSESSMENT_QUESTIONS = json.load(f)
-
-# Configure wkhtmltopdf path
-if os.name == 'nt':  # Windows
-    WKHTMLTOPDF_PATH = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
-    if not os.path.exists(WKHTMLTOPDF_PATH):
-        # Try alternative paths
-        alternative_paths = [
-            r'C:\Program Files (x86)\wkhtmltopdf\bin\wkhtmltopdf.exe',
-            r'wkhtmltopdf'  # If it's in system PATH
-        ]
-        for path in alternative_paths:
-            if os.path.exists(path):
-                WKHTMLTOPDF_PATH = path
-                break
-else:  # Linux/Unix/MacOS
-    # Probe common install locations used by Render and other distros
-    linux_candidates = [
-        '/usr/bin/wkhtmltopdf',
-        '/usr/local/bin/wkhtmltopdf',
-        'wkhtmltopdf'  # Fallback to PATH if available
-    ]
-    WKHTMLTOPDF_PATH = None
-    for path in linux_candidates:
-        if path == 'wkhtmltopdf' or os.path.exists(path):
-            WKHTMLTOPDF_PATH = path
-            break
-    if WKHTMLTOPDF_PATH is None:
-        WKHTMLTOPDF_PATH = 'wkhtmltopdf'
-
-# Configure pdfkit
-config = pdfkit.configuration(wkhtmltopdf=WKHTMLTOPDF_PATH)
 
 @app.route('/')
 def index():
@@ -272,166 +236,286 @@ def generate_pdf():
         html_content = data.get('html_content')
         institution_info = data.get('institution_info', {})
 
-        # Create a configuration for wkhtmltopdf
-        try:
-            config = pdfkit.configuration(wkhtmltopdf=WKHTMLTOPDF_PATH)
-        except Exception as e:
-            app.logger.error(f"Error configuring wkhtmltopdf: {str(e)}")
-            return jsonify({
-                "error": "PDF generation failed. Please make sure wkhtmltopdf is installed. Download from: https://wkhtmltopdf.org/downloads.html"
-            }), 500
-        
-        # Create a complete HTML document with styling
+        # Create a beautiful HTML report instead of PDF
         complete_html = f"""
         <!DOCTYPE html>
-        <html>
+        <html lang="en">
         <head>
             <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Program Assessment Report - {institution_info.get('programName', 'Program')}</title>
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
             <style>
-                /* Use system fonts to avoid external network fetches during PDF render */
+                * {{
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                }}
+                
                 body {{
                     font-family: 'Inter', Arial, Helvetica, sans-serif;
                     line-height: 1.6;
                     color: #2c3e50;
-                    margin: 1.5cm;
+                    background-color: #f8f9fa;
+                    padding: 2rem;
+                }}
+                
+                .report-container {{
                     max-width: 1200px;
-                    margin-left: auto;
-                    margin-right: auto;
+                    margin: 0 auto;
+                    background: white;
+                    border-radius: 12px;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                    overflow: hidden;
                 }}
-                h1 {{
-                    color: #2c3e50;
-                    border-bottom: 3px solid #2874a6;
-                    padding-bottom: 10px;
+                
+                .report-header {{
+                    background: linear-gradient(135deg, #2874a6 0%, #3498db 100%);
+                    color: white;
+                    padding: 3rem 2rem;
+                    text-align: center;
                 }}
-                h2 {{
-                    color: #2c3e50;
-                    margin-top: 20px;
-                    border-bottom: 1px solid #2874a6;
-                    padding-bottom: 5px;
+                
+                .report-header h1 {{
+                    font-size: 2.5rem;
+                    font-weight: 700;
+                    margin-bottom: 1rem;
                 }}
-                h3 {{
+                
+                .report-header h2 {{
+                    font-size: 1.5rem;
+                    font-weight: 500;
+                    margin-bottom: 0.5rem;
+                    opacity: 0.9;
+                }}
+                
+                .report-header p {{
+                    font-size: 1.1rem;
+                    opacity: 0.8;
+                }}
+                
+                .report-content {{
+                    padding: 3rem 2rem;
+                }}
+                
+                .report-content h1 {{
                     color: #2874a6;
+                    font-size: 2rem;
+                    margin-bottom: 1.5rem;
+                    padding-bottom: 1rem;
+                    border-bottom: 3px solid #3498db;
                 }}
-                table {{
+                
+                .report-content h2 {{
+                    color: #2874a6;
+                    font-size: 1.5rem;
+                    margin: 2rem 0 1rem;
+                    padding-bottom: 0.5rem;
+                    border-bottom: 1px solid #e9ecef;
+                }}
+                
+                .report-content h3 {{
+                    color: #2c3e50;
+                    font-size: 1.2rem;
+                    margin: 1.5rem 0 0.75rem;
+                }}
+                
+                .report-content p {{
+                    margin-bottom: 1rem;
+                    font-size: 1.1rem;
+                }}
+                
+                .report-content table {{
                     width: 100%;
                     border-collapse: collapse;
-                    margin: 20px 0;
-                    page-break-inside: auto;
+                    margin: 1.5rem 0;
+                    background: white;
+                    border-radius: 8px;
+                    overflow: hidden;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
                 }}
-                tr {{
-                    page-break-inside: avoid;
-                    page-break-after: auto;
-                }}
-                th, td {{
-                    border: 1px solid #ddd;
-                    padding: 12px;
+                
+                .report-content th {{
+                    background: #2874a6;
+                    color: white;
+                    padding: 1rem;
                     text-align: left;
+                    font-weight: 600;
+                    font-size: 1rem;
+                }}
+                
+                .report-content td {{
+                    padding: 1rem;
+                    border-bottom: 1px solid #e9ecef;
                     vertical-align: top;
                 }}
-                th {{
-                    background-color: #2874a6;
-                    color: white;
-                    font-weight: 600;
-                }}
-                tr:nth-child(even) {{
-                    background-color: #f5f5f5;
-                }}
-                .header {{
-                    text-align: center;
-                    margin-bottom: 30px;
-                }}
-                .footer {{
-                    margin-top: 50px;
-                    text-align: center;
-                    font-size: 0.9em;
-                    color: #7f8c8d;
-                    border-top: 1px solid #ddd;
-                    padding-top: 20px;
-                }}
-                .executive-summary {{
+                
+                .report-content tr:nth-child(even) {{
                     background-color: #f8f9fa;
-                    padding: 15px;
-                    border-left: 4px solid #2874a6;
-                    margin: 20px 0;
                 }}
-                ul, ol {{
-                    padding-left: 20px;
-                    margin: 0;
+                
+                .report-content tr:hover {{
+                    background-color: #e3f2fd;
                 }}
-                li {{
-                    margin-bottom: 5px;
+                
+                .report-content ul, .report-content ol {{
+                    margin: 1rem 0;
+                    padding-left: 2rem;
                 }}
-                td ul {{
-                    list-style-type: none;
-                    padding-left: 0;
+                
+                .report-content li {{
+                    margin-bottom: 0.5rem;
+                    font-size: 1.1rem;
                 }}
-                td ul li:before {{
-                    content: "•";
-                    color: #2874a6;
+                
+                .report-content blockquote {{
+                    border-left: 4px solid #3498db;
+                    padding-left: 1.5rem;
+                    margin: 1.5rem 0;
+                    color: #6c757d;
+                    font-style: italic;
+                    background: #f8f9fa;
+                    padding: 1rem;
+                    border-radius: 0 8px 8px 0;
+                }}
+                
+                .report-footer {{
+                    background: #f8f9fa;
+                    padding: 2rem;
+                    text-align: center;
+                    border-top: 1px solid #e9ecef;
+                }}
+                
+                .report-footer p {{
+                    color: #6c757d;
+                    margin-bottom: 0.5rem;
+                }}
+                
+                .download-section {{
+                    text-align: center;
+                    margin: 2rem 0;
+                    padding: 2rem;
+                    background: #f8f9fa;
+                    border-radius: 8px;
+                }}
+                
+                .download-btn {{
                     display: inline-block;
-                    width: 1em;
-                    margin-left: -1em;
+                    background: #2874a6;
+                    color: white;
+                    padding: 1rem 2rem;
+                    text-decoration: none;
+                    border-radius: 8px;
+                    font-weight: 600;
+                    transition: all 0.3s ease;
+                    margin: 0.5rem;
+                    border: none;
+                    cursor: pointer;
+                    font-size: 1rem;
+                }}
+                
+                .download-btn:hover {{
+                    background: #1a5276;
+                    transform: translateY(-2px);
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                }}
+                
+                .print-btn {{
+                    background: #28a745;
+                }}
+                
+                .print-btn:hover {{
+                    background: #1e7e34;
+                }}
+                
+                @media print {{
+                    body {{
+                        background: white;
+                        padding: 0;
+                    }}
+                    .report-container {{
+                        box-shadow: none;
+                        border-radius: 0;
+                    }}
+                    .download-section {{
+                        display: none;
+                    }}
+                }}
+                
+                @media (max-width: 768px) {{
+                    body {{
+                        padding: 1rem;
+                    }}
+                    .report-header {{
+                        padding: 2rem 1rem;
+                    }}
+                    .report-header h1 {{
+                        font-size: 2rem;
+                    }}
+                    .report-content {{
+                        padding: 2rem 1rem;
+                    }}
+                    .report-content table {{
+                        font-size: 0.9rem;
+                    }}
                 }}
             </style>
         </head>
         <body>
-            <div class="header">
-                <h1>Program Assessment Report</h1>
-                <h2>{institution_info.get('programName', '')}</h2>
-                <h3>{institution_info.get('institutionName', '')}</h3>
-                <p>Generated on {datetime.now().strftime('%B %d, %Y')}</p>
+            <div class="report-container">
+                <div class="report-header">
+                    <h1>Program Assessment Report</h1>
+                    <h2>{institution_info.get('programName', 'Program Name')}</h2>
+                    <p>{institution_info.get('institutionName', 'Institution Name')}</p>
+                    <p>Generated on {datetime.now().strftime('%B %d, %Y')}</p>
+                </div>
+                
+                <div class="report-content">
+                    {html_content}
+                </div>
+                
+                <div class="download-section">
+                    <button class="download-btn" onclick="window.print()">
+                        <i class="fas fa-print"></i> Print Report
+                    </button>
+                    <button class="download-btn print-btn" onclick="downloadAsPDF()">
+                        <i class="fas fa-file-pdf"></i> Save as PDF
+                    </button>
+                </div>
+                
+                <div class="report-footer">
+                    <p><strong>Generated by AccreditAI</strong></p>
+                    <p>Developed by Prof. Yasser Mansour & Ahmed Yasser</p>
+                    <p>Prince Sultan University</p>
+                </div>
             </div>
             
-            {html_content}
-            
-            <div class="footer">
-                <p>Generated by AccreditAI</p>
-                <p>Page <span class="page"></span> of <span class="topage"></span></p>
-            </div>
+            <script>
+                function downloadAsPDF() {{
+                    // Simple PDF generation using browser's print to PDF
+                    window.print();
+                }}
+                
+                // Add smooth scrolling
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {{
+                    anchor.addEventListener('click', function (e) {{
+                        e.preventDefault();
+                        document.querySelector(this.getAttribute('href')).scrollIntoView({{
+                            behavior: 'smooth'
+                        }});
+                    }});
+                }});
+            </script>
         </body>
         </html>
         """
 
-        try:
-            # Generate PDF with performance optimizations
-            pdf = pdfkit.from_string(complete_html, False, options={
-                'page-size': 'A4',
-                'margin-top': '0.75in',
-                'margin-right': '0.75in',
-                'margin-bottom': '0.75in',
-                'margin-left': '0.75in',
-                'encoding': 'UTF-8',
-                'enable-local-file-access': True,
-                'footer-right': '[page] of [topage]',
-                'footer-font-size': '9',
-                'footer-line': True,
-                'footer-spacing': '5',
-                # Performance and reliability tweaks
-                'quiet': '',
-                'disable-javascript': None,
-                'load-error-handling': 'ignore',
-                'load-media-error-handling': 'ignore',
-                'dpi': '96',
-                'image-quality': '85'
-            }, configuration=config)
-        except Exception as e:
-            app.logger.error(f"Error in PDF generation: {str(e)}")
-            return jsonify({
-                "error": "Failed to generate PDF. Please ensure wkhtmltopdf is properly installed."
-            }), 500
-
-        # Create response
-        response = make_response(pdf)
-        response.headers['Content-Type'] = 'application/pdf'
-        response.headers['Content-Disposition'] = f'attachment; filename=AccreditAI_{institution_info.get("programName", "Program").replace(" ", "_")}_Assessment_Report.pdf'
-        
-        return response
+        return jsonify({"html_report": complete_html})
 
     except Exception as e:
-        app.logger.error(f"Error in generate_pdf route: {str(e)}")
-        return jsonify({
-            "error": "An unexpected error occurred while generating the PDF. Please try again or contact support."
-        }), 500
+        app.logger.error(f"Error generating HTML report: {str(e)}")
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/api/share-report', methods=['POST'])
 def share_report():
@@ -441,168 +525,289 @@ def share_report():
         assessment_results = data.get('assessment_results', [])
         recommendations = data.get('recommendations', {})
         report = data.get('report', '')
-        email = data.get('email')
 
         # Generate HTML content from the Markdown report
         html_report = markdown.markdown(report, extensions=['tables'])
 
-        # Generate PDF
+        # Create a beautiful HTML report page
         complete_html = f"""
         <!DOCTYPE html>
-        <html>
+        <html lang="en">
         <head>
             <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Program Assessment Report - {institution_info.get('programName', 'Program')}</title>
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
             <style>
-                /* Use system fonts to avoid external network fetches during PDF render */
+                * {{
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                }}
+                
                 body {{
                     font-family: 'Inter', Arial, Helvetica, sans-serif;
                     line-height: 1.6;
                     color: #2c3e50;
-                    margin: 2cm;
+                    background-color: #f8f9fa;
+                    padding: 2rem;
                 }}
-                h1 {{
-                    color: #2c3e50;
-                    border-bottom: 3px solid #2874a6;
-                    padding-bottom: 10px;
+                
+                .report-container {{
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    background: white;
+                    border-radius: 12px;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                    overflow: hidden;
                 }}
-                h2 {{
-                    color: #2c3e50;
-                    margin-top: 20px;
-                    border-bottom: 1px solid #2874a6;
-                    padding-bottom: 5px;
+                
+                .report-header {{
+                    background: linear-gradient(135deg, #2874a6 0%, #3498db 100%);
+                    color: white;
+                    padding: 3rem 2rem;
+                    text-align: center;
                 }}
-                h3 {{
+                
+                .report-header h1 {{
+                    font-size: 2.5rem;
+                    font-weight: 700;
+                    margin-bottom: 1rem;
+                }}
+                
+                .report-header h2 {{
+                    font-size: 1.5rem;
+                    font-weight: 500;
+                    margin-bottom: 0.5rem;
+                    opacity: 0.9;
+                }}
+                
+                .report-header p {{
+                    font-size: 1.1rem;
+                    opacity: 0.8;
+                }}
+                
+                .report-content {{
+                    padding: 3rem 2rem;
+                }}
+                
+                .report-content h1 {{
                     color: #2874a6;
+                    font-size: 2rem;
+                    margin-bottom: 1.5rem;
+                    padding-bottom: 1rem;
+                    border-bottom: 3px solid #3498db;
                 }}
-                table {{
+                
+                .report-content h2 {{
+                    color: #2874a6;
+                    font-size: 1.5rem;
+                    margin: 2rem 0 1rem;
+                    padding-bottom: 0.5rem;
+                    border-bottom: 1px solid #e9ecef;
+                }}
+                
+                .report-content h3 {{
+                    color: #2c3e50;
+                    font-size: 1.2rem;
+                    margin: 1.5rem 0 0.75rem;
+                }}
+                
+                .report-content p {{
+                    margin-bottom: 1rem;
+                    font-size: 1.1rem;
+                }}
+                
+                .report-content table {{
                     width: 100%;
                     border-collapse: collapse;
-                    margin: 20px 0;
-                    page-break-inside: auto;
+                    margin: 1.5rem 0;
+                    background: white;
+                    border-radius: 8px;
+                    overflow: hidden;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
                 }}
-                tr {{
-                    page-break-inside: avoid;
-                    page-break-after: auto;
-                }}
-                th, td {{
-                    border: 1px solid #ddd;
-                    padding: 12px;
-                    text-align: left;
-                }}
-                th {{
-                    background-color: #2874a6;
+                
+                .report-content th {{
+                    background: #2874a6;
                     color: white;
+                    padding: 1rem;
+                    text-align: left;
                     font-weight: 600;
+                    font-size: 1rem;
                 }}
-                tr:nth-child(even) {{
-                    background-color: #f5f5f5;
+                
+                .report-content td {{
+                    padding: 1rem;
+                    border-bottom: 1px solid #e9ecef;
+                    vertical-align: top;
                 }}
-                .header {{
-                    margin-bottom: 30px;
-                }}
-                .footer {{
-                    margin-top: 50px;
-                    text-align: center;
-                    font-size: 0.9em;
-                    color: #7f8c8d;
-                    border-top: 1px solid #ddd;
-                    padding-top: 20px;
-                }}
-                .executive-summary {{
+                
+                .report-content tr:nth-child(even) {{
                     background-color: #f8f9fa;
-                    padding: 15px;
-                    border-left: 4px solid #2874a6;
-                    margin: 20px 0;
                 }}
-                ul, ol {{
-                    padding-left: 20px;
+                
+                .report-content tr:hover {{
+                    background-color: #e3f2fd;
                 }}
-                li {{
-                    margin-bottom: 5px;
+                
+                .report-content ul, .report-content ol {{
+                    margin: 1rem 0;
+                    padding-left: 2rem;
+                }}
+                
+                .report-content li {{
+                    margin-bottom: 0.5rem;
+                    font-size: 1.1rem;
+                }}
+                
+                .report-content blockquote {{
+                    border-left: 4px solid #3498db;
+                    padding-left: 1.5rem;
+                    margin: 1.5rem 0;
+                    color: #6c757d;
+                    font-style: italic;
+                    background: #f8f9fa;
+                    padding: 1rem;
+                    border-radius: 0 8px 8px 0;
+                }}
+                
+                .report-footer {{
+                    background: #f8f9fa;
+                    padding: 2rem;
+                    text-align: center;
+                    border-top: 1px solid #e9ecef;
+                }}
+                
+                .report-footer p {{
+                    color: #6c757d;
+                    margin-bottom: 0.5rem;
+                }}
+                
+                .download-section {{
+                    text-align: center;
+                    margin: 2rem 0;
+                    padding: 2rem;
+                    background: #f8f9fa;
+                    border-radius: 8px;
+                }}
+                
+                .download-btn {{
+                    display: inline-block;
+                    background: #2874a6;
+                    color: white;
+                    padding: 1rem 2rem;
+                    text-decoration: none;
+                    border-radius: 8px;
+                    font-weight: 600;
+                    transition: all 0.3s ease;
+                    margin: 0.5rem;
+                    border: none;
+                    cursor: pointer;
+                    font-size: 1rem;
+                }}
+                
+                .download-btn:hover {{
+                    background: #1a5276;
+                    transform: translateY(-2px);
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                }}
+                
+                .print-btn {{
+                    background: #28a745;
+                }}
+                
+                .print-btn:hover {{
+                    background: #1e7e34;
+                }}
+                
+                @media print {{
+                    body {{
+                        background: white;
+                        padding: 0;
+                    }}
+                    .report-container {{
+                        box-shadow: none;
+                        border-radius: 0;
+                    }}
+                    .download-section {{
+                        display: none;
+                    }}
+                }}
+                
+                @media (max-width: 768px) {{
+                    body {{
+                        padding: 1rem;
+                    }}
+                    .report-header {{
+                        padding: 2rem 1rem;
+                    }}
+                    .report-header h1 {{
+                        font-size: 2rem;
+                    }}
+                    .report-content {{
+                        padding: 2rem 1rem;
+                    }}
+                    .report-content table {{
+                        font-size: 0.9rem;
+                    }}
                 }}
             </style>
         </head>
         <body>
-            <div class="header">
-                <h1>Program Assessment Report</h1>
-                <p>
-                    <strong>Institution:</strong> {institution_info.get('institutionName', '')}<br>
-                    <strong>Program:</strong> {institution_info.get('programName', '')}<br>
-                    <strong>Generated on:</strong> {datetime.now().strftime('%B %d, %Y')}
-                </p>
+            <div class="report-container">
+                <div class="report-header">
+                    <h1>Program Assessment Report</h1>
+                    <h2>{institution_info.get('programName', 'Program Name')}</h2>
+                    <p>{institution_info.get('institutionName', 'Institution Name')}</p>
+                    <p>Generated on {datetime.now().strftime('%B %d, %Y')}</p>
+                </div>
+                
+                <div class="report-content">
+                    {html_report}
+                </div>
+                
+                <div class="download-section">
+                    <button class="download-btn" onclick="window.print()">
+                        <i class="fas fa-print"></i> Print Report
+                    </button>
+                    <button class="download-btn print-btn" onclick="downloadAsPDF()">
+                        <i class="fas fa-file-pdf"></i> Save as PDF
+                    </button>
+                </div>
+                
+                <div class="report-footer">
+                    <p><strong>Generated by AccreditAI</strong></p>
+                    <p>Developed by Prof. Yasser Mansour & Ahmed Yasser</p>
+                    <p>Prince Sultan University</p>
+                </div>
             </div>
             
-            {html_report}
-            
-            <div class="footer">
-                <p>Generated by AccreditAI | Developed by Prof. Yasser Mansour & Ahmed Yasser</p>
-                <p>Prince Sultan University</p>
-            </div>
+            <script>
+                function downloadAsPDF() {{
+                    // Simple PDF generation using browser's print to PDF
+                    window.print();
+                }}
+                
+                // Add smooth scrolling
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {{
+                    anchor.addEventListener('click', function (e) {{
+                        e.preventDefault();
+                        document.querySelector(this.getAttribute('href')).scrollIntoView({{
+                            behavior: 'smooth'
+                        }});
+                    }});
+                }});
+            </script>
         </body>
         </html>
         """
 
-        # Configure PDF options
-        try:
-            config = pdfkit.configuration(wkhtmltopdf=WKHTMLTOPDF_PATH)
-        except Exception as e:
-            app.logger.error(f"Error configuring wkhtmltopdf: {str(e)}")
-            return jsonify({
-                "error": "PDF generation failed. Please make sure wkhtmltopdf is installed."
-            }), 500
-
-        pdf = pdfkit.from_string(complete_html, False, options={
-            'page-size': 'A4',
-            'margin-top': '0.75in',
-            'margin-right': '0.75in',
-            'margin-bottom': '0.75in',
-            'margin-left': '0.75in',
-            'encoding': 'UTF-8',
-            'enable-local-file-access': True,
-            # Performance and reliability tweaks
-            'quiet': '',
-            'disable-javascript': None,
-            'load-error-handling': 'ignore',
-            'load-media-error-handling': 'ignore',
-            'dpi': '96',
-            'image-quality': '85'
-        }, configuration=config)
-
-        # Email configuration
-        sender_email = "accreditai.system@gmail.com"  # You'll need to set up this email
-        msg = MIMEMultipart()
-        msg['From'] = sender_email
-        msg['To'] = email
-        msg['Subject'] = f"AccreditAI Assessment Report - {institution_info.get('programName', 'Program')} - {datetime.now().strftime('%Y-%m-%d')}"
-
-        # Add body
-        body = f"""
-        Program Assessment Report
-        
-        Institution: {institution_info.get('institutionName', '')}
-        Program: {institution_info.get('programName', '')}
-        Generated on: {datetime.now().strftime('%B %d, %Y')}
-        
-        This report was shared with the AccreditAI development team for analysis and improvement purposes.
-        """
-        msg.attach(MIMEText(body, 'plain'))
-
-        # Add PDF attachment
-        pdf_attachment = MIMEApplication(pdf, _subtype='pdf')
-        pdf_attachment.add_header('Content-Disposition', 'attachment', 
-                                filename=f"AccreditAI_{institution_info.get('programName', 'Program').replace(' ', '_')}_Assessment_Report.pdf")
-        msg.attach(pdf_attachment)
-
-        # Send email
-        with smtplib.SMTP('smtp.gmail.com', 587) as server:
-            server.starttls()
-            server.login(sender_email, os.getenv('EMAIL_PASSWORD'))
-            server.send_message(msg)
-
-        return jsonify({"message": "Report shared successfully"})
+        return jsonify({"html_report": complete_html})
 
     except Exception as e:
-        app.logger.error(f"Error sharing report: {str(e)}")
+        app.logger.error(f"Error generating HTML report: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 @app.route('/ask')

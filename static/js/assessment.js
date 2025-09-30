@@ -492,15 +492,15 @@ async function generateReport() {
     }
 }
 
-// Add download functionality
+// Replace the downloadReport function (lines 496-543) with this:
 async function downloadReport() {
     try {
-        showLoading('Generating PDF...');
+        showLoading('Generating report...');
         
         // Get the HTML content from the report
         const reportContent = document.querySelector('.report-content').innerHTML;
         
-        // Send request to generate PDF
+        // Send request to generate HTML report
         const response = await fetch('/api/generate-pdf', {
             method: 'POST',
             headers: {
@@ -513,32 +513,29 @@ async function downloadReport() {
         });
         
         if (!response.ok) {
-            throw new Error('Failed to generate PDF');
+            throw new Error('Failed to generate report');
         }
         
-        // Convert response to blob
-        const blob = await response.blob();
+        const data = await response.json();
         
-        // Create a URL for the blob
-        const url = window.URL.createObjectURL(blob);
-        
-        // Create a temporary link and click it to download
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `AccreditAI_${state.institutionInfo.programName.replace(/\s+/g, '_')}_Assessment_Report.pdf`;
-        document.body.appendChild(a);
-        a.click();
-        
-        // Clean up
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
+        if (data.html_report) {
+            // Open the report in a new window
+            const reportWindow = window.open('', '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes');
+            reportWindow.document.write(data.html_report);
+            reportWindow.document.close();
+            
+            // Focus the new window
+            reportWindow.focus();
+        } else {
+            throw new Error('No report generated');
+        }
         
         hideLoading();
         
     } catch (error) {
-        console.error('Error downloading report:', error);
+        console.error('Error generating report:', error);
         hideLoading();
-        addBotMessage('There was an error downloading the report. Please try again.');
+        addBotMessage('There was an error generating the report. Please try again.');
     }
 }
 

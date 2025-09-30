@@ -1,1 +1,1 @@
-wkhtmltopdf
+# wkhtmltopdf  # Removed - using HTML reports instead

@@ -11,6 +11,4 @@ python-dotenv==1.0.1
 # Markdown stack (compatible with Python 3.13)
 markdown==3.4.4
 
-# Other libs in use
-pdfkit==1.0.0
-# secure-smtplib is not needed for Python 3's smtplib
+# Email and PDF functionality removed - using HTML reports only
