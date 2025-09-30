@@ -611,3 +611,37 @@ function showNextAssessmentQuestion() {
 
 // Initialize the chat when the page loads
 initializeChat(); 
+
+// Mobile sidebar toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarClose = document.getElementById('sidebarClose');
+    
+    if (sidebarToggle && sidebar && sidebarClose) {
+        sidebarToggle.addEventListener('click', function() {
+            sidebar.classList.add('open');
+        });
+        
+        sidebarClose.addEventListener('click', function() {
+            sidebar.classList.remove('open');
+        });
+        
+        // Close sidebar when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
+                sidebar.classList.remove('open');
+            }
+        });
+        
+        // Close sidebar when selecting a nav item on mobile
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.remove('open');
+                }
+            });
+        });
+    }
+}); 
